@@ -31,6 +31,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'mo_hamza@esi.dz'  # Replace with your email
+EMAIL_HOST_PASSWORD = 'tzgs ulcd pkxk xyqk'  # Replace with your app password (not your account password)
+
+
 
 # Application definition
 
@@ -41,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+     'DPI',
 ]
 
 MIDDLEWARE = [
