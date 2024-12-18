@@ -15,7 +15,7 @@ Thumbs.db
 # IDE/Editor files
 .vscode/
 .idea/
-
+.prettierrc
 # Logs and temporary files
 *.log
 DigiCertGlobalRootCA.crt.pem
