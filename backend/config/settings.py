@@ -38,7 +38,12 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'mo_hamza@esi.dz'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'tzgs ulcd pkxk xyqk'  # Replace with your app password (not your account password)
 
-
+#
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',  # Use only JSON response
+    ]
+}
 
 # Application definition
 
