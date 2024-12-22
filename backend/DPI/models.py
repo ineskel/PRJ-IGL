@@ -4,7 +4,8 @@ from django.db import models
 from django.db import models
 
 class DPI(models.Model):
-    NSS = models.BigIntegerField(unique=True)
+    # nss as a primary key
+    NSS = models.BigIntegerField(primary_key=True)
     Nom = models.CharField(max_length=20)
     Prenom = models.CharField(max_length=20)
     DateDeNaissonce = models.DateField()
@@ -29,3 +30,13 @@ class Patient(models.Model):
     Password = models.CharField(max_length=20)
     def __str__(self):
         return f"Patient {self.DPI_NSS.Nom}"
+
+class Consultation(models.Model):
+    DPI_NSS = models.ForeignKey(DPI, on_delete=models.CASCADE, to_field="NSS")
+    ID_Medcin = models.IntegerField()
+    Date = models.DateTimeField(auto_now_add=True)
+    Resume = models.TextField()
+    Diagnostic = models.CharField(max_length=100)
+    Traitement = models.CharField(max_length=100)
+    def __str__(self):
+        return f"Consultation de {self.DPI_NSS.Nom} le {self.Date}"
