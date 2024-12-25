@@ -25,6 +25,8 @@ def register(request):
                 request.data['specialite'] = ''
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login(request):

@@ -38,17 +38,12 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    """
-    Custom user model with roles and specialties.
-    """
-    # Basic fields
+
     id = models.AutoField(primary_key=True)
     nom = models.CharField(max_length=150)
     prenom = models.CharField(max_length=150)
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=128)
-
-    # Additional fields
     ROLE_CHOICES = [
         ('patient', 'Patient'),
         ('medecin', 'Medecin'),
@@ -58,7 +53,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('administratif', 'Administratif'),
     ]
     role = models.CharField(max_length=15, choices=ROLE_CHOICES)
-
     SPECIALITY_CHOICES = [
         ('pediatre', 'Pédiatre'),
         ('cardiologue', 'Cardiologue'),
@@ -69,13 +63,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('', 'None'),
     ]
     specialite = models.CharField(max_length=20, choices=SPECIALITY_CHOICES)
-
-    # Fields for user management
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-
     objects = UserManager()
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['nom', 'prenom', 'role', 'specialite']
 

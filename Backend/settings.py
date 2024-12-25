@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'DPI',
     'Compte',
+    'Consultation',
+    'Bilan',
+    'Soins',
+
 ]
 
 MIDDLEWARE = [

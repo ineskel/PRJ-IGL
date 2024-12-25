@@ -20,7 +20,7 @@ class UserSerializer(serializers.ModelSerializer):
             nom=validated_data.get('nom', ''),
             prenom=validated_data.get('prenom', ''),
             role=validated_data.get('role'),
-            specialite=validated_data.get('specialite')
+            specialite=validated_data.get('specialite'),
         )
         user.save()
         
