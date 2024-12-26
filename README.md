@@ -38,4 +38,8 @@ This project is a web application for managing **Dossier Patient Informatisé (D
 ## Installation
 
 1. Clone the repository
-2. init
+2. create a virtual environment python -m venv .venv
+3. activate the environment source .venv/bin/activate (linux) .venv\Scripts\Activate (windows)
+4. update pip python -m pip install --upgrade pip
+5. install requirements pip install -r requirements.txt
+6. run the server python manage.py runserver 
