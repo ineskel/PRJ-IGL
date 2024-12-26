@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'Consultation',
     'Bilan',
     'Soins',
-
+    'Medicaments',
+    'Ordonnance',
 ]
 
 MIDDLEWARE = [

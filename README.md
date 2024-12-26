@@ -37,4 +37,5 @@ This project is a web application for managing **Dossier Patient Informatisé (D
 
 ## Installation
 
-1. Clone the repository:
+1. Clone the repository
+2. init

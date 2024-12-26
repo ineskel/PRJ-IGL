@@ -24,7 +24,7 @@ class DPIView(APIView):
             'email': data['email'],
             'role': 'patient',
             'password': password,
-            'specialite': '',
+            'specialite': '',    
         }
         # create the patient
         serializer = UserSerializer(data=Patient)
@@ -48,7 +48,7 @@ class DPIList(APIView):
         serializer = DPISerializer(DPIs, many=True)
         return Response(serializer.data)
     
-class ConsulterDPI(APIView):
+class RechercheDPI(APIView):
     permission_classes = [IsPatient | IsMedecin]
 
     def get(self, request, NSS):
