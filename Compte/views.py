@@ -5,8 +5,10 @@ from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer
 from .models import User
-from rest_framework.permissions import AllowAny
-from .permissions import IsMedecin, IsAdministratif
+from rest_framework.permissions import AllowAny , IsAuthenticated
+from .permissions import IsAdminUser , IsPatient
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
 # Create your views here.
 
 @api_view(['POST'])
@@ -43,3 +45,53 @@ def login(request):
                 'user':  UserSerializer(user).data
             })
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+    
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    user = request.user
+    password = request.data.get('password')
+
+    if not password:
+        return Response({'error': 'Password is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Validate the password
+    try:
+        validate_password(password, user=user)
+    except ValidationError as e:
+        return Response({'errors': e.messages}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Set and save the new password
+    user.set_password(password)
+    user.save()
+
+    return Response({'message': 'Password changed successfully'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def get_medecins(request):
+    medecins = User.objects.filter(role='medecin')
+    serializer = UserSerializer(medecins, many=True)
+    return Response(serializer.data)
+
+
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def get_patients(request):
+    try:
+        patients = User.objects.filter(role='patient')
+        serializer = UserSerializer(patients, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+@permission_classes([IsAdminUser])
+def get_users(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)

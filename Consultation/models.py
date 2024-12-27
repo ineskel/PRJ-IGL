@@ -10,5 +10,5 @@ class Consultation(models.Model):
     medecin = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, limit_choices_to={'role': 'medecin'},related_name='Consultation_Medecin')
     DPI = models.ForeignKey(DPI, on_delete=models.CASCADE, related_name='Consultation_DPI')
     def __str__(self):
-        return f"Consultation cree par {self.Medecin} pour le patient {self.DPI}"
+        return f"Consultation cree par DR {self.medecin.username} pour le patient {self.DPI}"
     
