@@ -5,6 +5,7 @@ from Compte.permissions import IsMedecin , IsPatient
 from .serializers import ConsultationCreateSerializer, ConsultationSerializer
 from rest_framework.decorators import api_view, permission_classes
 from Bilan.serializers import BilanBiologiqueSerializer, BilanRadiologiqueSerializer
+from Medicaments.serializers import OrdonnanceSerializer
 # Create your views here.
 
 # create consultation 
@@ -46,10 +47,12 @@ def get_consultation_byid(request, pk):
     if consultation:
         BilanBiologique = consultation.BilanBiologique_Consultation.all()
         BilanRadiologique = consultation.BilanRadiologique_Consultation.all()
+        Ordonnance = consultation.consultation_ordonnance.all()
         return Response({
         'consultation': ConsultationSerializer(consultation).data, 
         'BilanBiologique': BilanBiologiqueSerializer(BilanBiologique, many=True).data,
-        'BilanRadiologique': BilanRadiologiqueSerializer(BilanRadiologique, many=True).data
+        'BilanRadiologique': BilanRadiologiqueSerializer(BilanRadiologique, many=True).data,
+        'Ordonnance': OrdonnanceSerializer(Ordonnance, many=True).data
         })
     return Response({'error': 'Consultation not found'}, status=status.HTTP_404_NOT_FOUND)
 # update consultation
