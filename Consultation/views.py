@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from .models import Consultation
 from Compte.permissions import IsMedecin ,IsLaborantin ,IsRadiologue
-from .serializers import ConsultationCreateSerializer
+from .serializers import ConsultationCreateSerializer, ConsultationSerializer
 from rest_framework.decorators import api_view, permission_classes
 from Ordonnance.models import Ordonnance
 from Bilan.models import BilanBiologique, BilanRadiologique
@@ -16,7 +16,7 @@ def create_consultation(request):
     medecin = request.user
     data = request.data
     data['medecin'] = medecin.id
-    serializer = ConsultationCreateSerializer(data=data)
+    serializer = ConsultationSerializer(data=data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -31,14 +31,14 @@ def get_consultations(request):
     serializer = ConsultationCreateSerializer(consultations, many=True)
     return Response(serializer.data)
 
-# get consultation by id for medecin
+# get consultation by id 
 @api_view(['GET'])
 @permission_classes([IsMedecin])
-def get_consultation_medecin(request, pk):
+def get_consultation_byid(request, pk):
     medecin = request.user
-    consultation = Consultation.objects.get(medecin=medecin, id=pk)
+    consultation = Consultation.objects.filter(medecin=medecin, IdConsultation=pk)
     if consultation:
-        serializer = ConsultationCreateSerializer(consultation)
+        serializer = ConsultationCreateSerializer(consultation, many=True)
         return Response(serializer.data)
     return Response({'error': 'Consultation not found'}, status=status.HTTP_404_NOT_FOUND)
 # update consultation
@@ -46,7 +46,7 @@ def get_consultation_medecin(request, pk):
 @permission_classes([IsMedecin])
 def UpdateConsultation(request, pk):
     medecin = request.user
-    consultation = Consultation.objects.filter(medecin=medecin, id=pk)
+    consultation = Consultation.objects.filter(medecin=medecin, IdConsultation=pk)
     if consultation:
         data = request.data
         data['medecin'] = medecin.id
@@ -62,7 +62,7 @@ def UpdateConsultation(request, pk):
 @permission_classes([IsMedecin])
 def add_ordonnance(request, pk):
     medecin = request.user
-    consultation = Consultation.objects.filter(medecin=medecin, id=pk)
+    consultation = Consultation.objects.filter(medecin=medecin, IdConsultation=pk)
     if consultation:
         data = request.data
         data['medecin'] = medecin.id
@@ -79,7 +79,7 @@ def add_ordonnance(request, pk):
 @permission_classes([IsLaborantin])
 def add_bilan_biologique(request, pk):
     laborantin = request.user
-    consultation = Consultation.objects.filter(id=pk)
+    consultation = Consultation.objects.filter(IdConsultation=pk)
     if consultation:
         data = request.data
         data['laborantin'] = laborantin.id

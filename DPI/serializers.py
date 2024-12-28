@@ -11,8 +11,8 @@ class DPISerializer(serializers.ModelSerializer):
         
         
 class DPIDetailSerializer(serializers.ModelSerializer):
-    soins= SoinsCreateSerializer(many=True)
-    consultations = ConsultationCreateSerializer(many=True)
+    soins= SoinsCreateSerializer(many=True,allow_null=True)
+    consultations = ConsultationCreateSerializer(many=True,allow_null=True)
     class Meta:
         model = DPI
         fields = ['NSS', 'Nom', 'Prenom', 'DateDeNaissonce', 'Adress', 'Numero', 'Mutuelle', 'sexe', 'ContactNom', 'ContactNumero', 'created_at', 'updated_at', 'soins', 'consultations']
