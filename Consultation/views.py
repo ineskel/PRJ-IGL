@@ -68,21 +68,6 @@ def UpdateConsultation(request, pk):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     return Response({'error': 'Consultation not found'}, status=status.HTTP_404_NOT_FOUND)
 
-# add ordonnance to consultation
-@api_view(['POST'])
-@permission_classes([IsMedecin])
-def add_ordonnance(request, pk):
-    medecin = request.user
-    consultation = Consultation.objects.filter(medecin=medecin, IdConsultation=pk)
-    if consultation:
-        data = request.data
-        data['medecin'] = medecin.id
-        data['consultation'] = pk
-        serializer = ConsultationCreateSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return Response({'error': 'Consultation not found'}, status=status.HTTP_404_NOT_FOUND)
+
 
 

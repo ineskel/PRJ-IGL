@@ -30,7 +30,7 @@ class DemandeBilan(models.Model):
     IdDemandeBilan = models.AutoField(primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
     patient = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, limit_choices_to={'role': 'patient'},null=True,related_name='DemandeBilan_patient')
-    Consultation = models.ForeignKey(Consultation, on_delete=models.CASCADE, related_name='Demande_Consultation',null=True)
+    Consultation = models.ForeignKey('Consultation.Consultation', on_delete=models.CASCADE, related_name='Demande_Consultation',null=True)
     BILAN_CHOICES = (
         ('B', 'Biologique'),
         ('R', 'Radiologique'),
@@ -44,3 +44,4 @@ class DemandeBilan(models.Model):
     etat = models.CharField(max_length=10, choices=DEMANDE_ETATS, default='enattente')
     def __str__(self):
         return f"Demande de Bilan pour le patient {self.IdDemandeBilan}"
+    

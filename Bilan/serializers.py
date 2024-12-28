@@ -15,5 +15,5 @@ class BilanRadiologiqueSerializer(serializers.ModelSerializer):
 class DemandeBilanSerializer(serializers.ModelSerializer):
     class Meta:
         model = DemandeBilan
-        fields = ['IdDemandeBilan', 'patient', 'typebilan', 'TypeTest']
+        fields = ['IdDemandeBilan', 'patient', 'typebilan', 'TypeTest','etat', 'Consultation']
         

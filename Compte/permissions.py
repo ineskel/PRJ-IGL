@@ -23,7 +23,7 @@ class IsAdministratif(permissions.BasePermission):
         return request.user and request.user.is_authenticated and request.user.role == 'administratif'
 class IsInfermier(permissions.BasePermission):
     def has_permission(self, request, view):
-        return request.user and request.user.is_authenticated and request.user.role == 'infermier' 
+        return request.user and request.user.is_authenticated and request.user.role == 'infirmier' 
 class IsRadiologue(permissions.BasePermission):
     def has_permission(self, request, view):
         return request.user and request.user.is_authenticated and request.user.role == 'radiologue'

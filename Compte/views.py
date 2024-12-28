@@ -6,7 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .serializers import UserSerializer
 from .models import User
 from rest_framework.permissions import AllowAny , IsAuthenticated
-from .permissions import IsAdminUser , IsPatient
+from .permissions import IsAdminUser 
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 # Create your views here.
@@ -27,6 +27,8 @@ def register(request):
                 request.data['specialite'] = ''
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response({'error': 'Invalid request'}, status=status.HTTP_400_BAD_REQUEST)
         
 
 @api_view(['POST'])

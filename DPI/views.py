@@ -9,7 +9,7 @@ from .serializers import DPISerializer , DPIDetailSerializer
 from rest_framework.views import APIView
 from django.utils.crypto import get_random_string
 from Consultation.serializers import ConsultationCreateSerializer, ConsultationSerializer
-
+from Soins.serializers import SoinsCreateSerializer, SoinsSerializer
 # Create your views here.
 
 class DPIView(APIView):
@@ -87,11 +87,12 @@ class ConsulterDPI(APIView):
                 dpi_instance = DPI.objects.get(NSS=NSS)
                         # Access related consultations using the related_name
             consultations = dpi_instance.Consultation_DPI.all()
-            
+            soins = dpi_instance.DPI_Soin.all()
             # Serialize DPI and consultations as needed
             return Response({
                 "dpi": DPISerializer(dpi_instance).data,
-                "consultations": ConsultationSerializer(consultations, many=True).data
+                "consultations": ConsultationSerializer(consultations, many=True).data,
+                "soins": SoinsSerializer(soins, many=True).data
             }, status=status.HTTP_200_OK)
         except DPI.DoesNotExist:
             # Return a 404 response if the DPI record does not exist
