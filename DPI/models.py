@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from Consultation.models import Consultation
 # Create your models here.
 class DPI(models.Model):
     # nss is a primary key and it's unique

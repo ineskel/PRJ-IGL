@@ -11,10 +11,10 @@ class ConsultationSerializer(serializers.ModelSerializer):
         extra_kwargs = {'resume': {'required': False}}
         
 class ConsultationCreateSerializer(serializers.ModelSerializer):
-    ordonnance = OrdonnanceSerializer(many=True,allow_null=True)
-    bilanbiologique = BilanBiologiqueSerializer(many=True,allow_null=True)
-    bilanradiologique = BilanRadiologiqueSerializer(many=True,allow_null=True)
+    ordonnance = OrdonnanceSerializer(many=True,required=False)
+    bilanbiologique = BilanBiologiqueSerializer(many=True,required=False)
+    bilanradiologique = BilanRadiologiqueSerializer(many=True,required=False)
     class Meta:
         model = Consultation
-        fields = ['resume', 'ordonnance', 'bilanbiologique', 'bilanradiologique']
+        fields = ['resume','DPI_id','ordonnance', 'bilanbiologique', 'bilanradiologique']
     

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import DPI
-from Consultation.serializers import ConsultationCreateSerializer
+from Consultation.serializers import ConsultationSerializer , ConsultationCreateSerializer
 from Soins.serializers import SoinsCreateSerializer
 
 
