@@ -9,6 +9,7 @@ from rest_framework.permissions import AllowAny , IsAuthenticated
 from .permissions import IsAdminUser 
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
+from Compte.permissions import IsAdministratif
 # Create your views here.
 
 @api_view(['POST'])
@@ -92,7 +93,7 @@ def get_patients(request):
 
 
 @api_view(['GET'])
-@permission_classes([IsAdminUser])
+@permission_classes([IsAdministratif])
 def get_users(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
