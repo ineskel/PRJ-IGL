@@ -5,9 +5,11 @@ from .models import DPI
 from django.contrib.auth import get_user_model
 from Compte.serializers import UserSerializer
 from Compte.permissions import IsPatient, IsMedecin, IsAdministratif
-from .serializers import DPISerializer
+from .serializers import DPISerializer , DPIDetailSerializer
 from rest_framework.views import APIView
 from django.utils.crypto import get_random_string
+from Consultation.serializers import ConsultationCreateSerializer, ConsultationSerializer
+from Soins.serializers import SoinsCreateSerializer, SoinsSerializer
 # Create your views here.
 
 class DPIView(APIView):
@@ -71,4 +73,30 @@ class RechercheDPI(APIView):
         serializer = DPISerializer(dpi_instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-         
+
+class ConsulterDPI(APIView):
+    permission_classes = [IsPatient | IsMedecin]
+    def get(self, request, NSS):
+        try:
+            # Check if the user is a patient
+            if request.user.role == 'patient':
+                # Ensure the patient can only access their own DPI
+                dpi_instance = DPI.objects.select_related('Patient').get(NSS=NSS, Patient=request.user)
+            else:
+                # If not a patient, allow the user to access any DPI
+                dpi_instance = DPI.objects.get(NSS=NSS)
+                        # Access related consultations using the related_name
+            consultations = dpi_instance.Consultation_DPI.all()
+            soins = dpi_instance.DPI_Soin.all()
+            # Serialize DPI and consultations as needed
+            return Response({
+                "dpi": DPISerializer(dpi_instance).data,
+                "consultations": ConsultationSerializer(consultations, many=True).data,
+                "soins": SoinsSerializer(soins, many=True).data
+            }, status=status.HTTP_200_OK)
+        except DPI.DoesNotExist:
+            # Return a 404 response if the DPI record does not exist
+            return Response({"error": "DPI not found."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            # Handle unexpected exceptions and return a 500 response
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)        

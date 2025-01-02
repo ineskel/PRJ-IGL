@@ -25,7 +25,6 @@ This project is a web application for managing **Dossier Patient Informatisé (D
 
 ## Tech Stack
 
-- **Frontend**: Angular with TypeScript
 - **Backend**: Django with Python
 - **Database**: MySQL
 - **APIs**: RESTful architecture

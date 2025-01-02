@@ -1,9 +1,11 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from Consultation.models import Consultation
 # Create your models here.
 class DPI(models.Model):
     # nss is a primary key and it's unique
-    NSS = models.BigIntegerField(primary_key=True , unique=True)
+    idDPI = models.AutoField(primary_key=True)
+    NSS = models.BigIntegerField(unique=True)
     Nom = models.CharField(max_length=20)
     Prenom = models.CharField(max_length=20)
     DateDeNaissonce = models.DateField()

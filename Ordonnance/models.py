@@ -10,6 +10,6 @@ class Ordonnance(models.Model):
         ('A', 'Attente'),
     )
     statue = models.CharField(max_length=2, choices=STATUE, default='A')
-    consultation = models.ForeignKey(Consultation, on_delete=models.CASCADE, related_name='consultation_ordonnance')
+    consultation = models.ForeignKey('Consultation.Consultation', on_delete=models.CASCADE, related_name='consultation_ordonnance')
     def __str__(self):
         return f"{self.IdOrdonnance}"
