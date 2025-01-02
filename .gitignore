@@ -3,7 +3,7 @@ venv/
 
 # Environment variables
 .env
-
+env
 # Compiled Python files
 __pycache__/
 *.py[cod]
