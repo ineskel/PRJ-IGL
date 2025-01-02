@@ -26,17 +26,17 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         
                # Send a welcome email
-        # subject = 'Welcome to Our Platform!'
-        # message = f"Hello {user.nom} {user.prenom},\n\n" \
-        #           f"Your account has been created. Here are your login details:\n" \
-        #           f"Email: {user.email}\n" \
-        #           f"Password: {validated_data['password']}\n\n" \
-        #           f"Please change your password after logging in."
+        subject = 'Welcome to Our Platform!'
+        message = f"Hello {user.nom} {user.prenom},\n\n" \
+                  f"Your account has been created. Here are your login details:\n" \
+                  f"Email: {user.email}\n" \
+                  f"Password: {validated_data['password']}\n\n" \
+                  f"Please change your password after logging in."
 
-        # from_email = 'noreply@example.com'  # Sender email
-        # recipient_list = [user.email]  # List of recipient emails
+        from_email = 'noreply@example.com'  # Sender email
+        recipient_list = [user.email]  # List of recipient emails
 
-        # send_mail(subject, message, from_email, recipient_list)
+        send_mail(subject, message, from_email, recipient_list)
         return user
     
     

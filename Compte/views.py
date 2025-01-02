@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view, permission_classes, authentication_classes
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
@@ -10,10 +10,12 @@ from .permissions import IsAdminUser
 from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError
 from Compte.permissions import IsAdministratif
+from drf_yasg.utils import swagger_auto_schema
 # Create your views here.
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@swagger_auto_schema(operation_description="Register a new user", request_body=UserSerializer)
 def register(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
@@ -34,6 +36,7 @@ def register(request):
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
+@swagger_auto_schema(operation_description="Login a user", request_body=UserSerializer , responses={200: UserSerializer})
 def login(request):
 
     if request.method == 'POST':

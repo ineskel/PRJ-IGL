@@ -1,6 +1,5 @@
 from django.db import models
 from Ordonnance.models import Ordonnance
-from django.core.exceptions import ValidationError
 
 class Medicament(models.Model):
     IdMedicament = models.AutoField(primary_key=True)

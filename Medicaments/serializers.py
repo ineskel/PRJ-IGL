@@ -25,7 +25,7 @@ class OrdonnanceSerializer(serializers.ModelSerializer):
     medicaments = MedicamentOrdonnanceCreateSerializer(many=True, source='ordonnance_medicament')
     class Meta:
         model = Ordonnance
-        fields = ['IdOrdonnance', 'medicaments' , 'consultation']
+        fields = ['IdOrdonnance', 'medicaments' , 'consultation', 'created_at', 'statue']
         
         
     def create(self, validated_data):
