@@ -9,6 +9,10 @@ from rest_framework.permissions import AllowAny
 from .permissions import IsMedecin, IsAdministratif
 # Create your views here.
 
+@api_view(['GET'])
+def test_connection(request):
+    return Response({"message": "Connection successful!"}, status=200)
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def register(request):
@@ -25,7 +29,8 @@ def register(request):
                 request.data['specialite'] = ''
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
