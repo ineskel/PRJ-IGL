@@ -34,3 +34,30 @@ def OrdonnanceDelete(request, pk):
         ordonnance = Ordonnance.objects.get(pk=pk)
         ordonnance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+# get the ordonnance that are not checked (status = A)
+@api_view(['GET'])
+@permission_classes([IsMedecin])
+def OrdonnanceAttente(request):
+        ordonnance = Ordonnance.objects.filter(statue='A')
+        serializer = OrdonnanceSerializer(ordonnance, many=True)
+        return Response(serializer.data)
+
+# validate the ordonnance by id 
+@api_view(['PUT'])
+@permission_classes([IsMedecin])
+def OrdonnanceValide(request):
+        ordonnance = Ordonnance.objects.get(pk=pk)
+        ordonnance.statue = 'V'
+        ordonnance.save()
+        serializer = OrdonnanceSerializer(ordonnance)
+        return Response(serializer.data)
+# unvalidate the ordonnance by id
+@api_view(['PUT'])
+@permission_classes([IsMedecin])
+def OrdonnanceNonValide(request):
+        ordonnance = Ordonnance.objects.get(pk=pk)
+        ordonnance.statue = 'NV'
+        ordonnance.save()
+        serializer = OrdonnanceSerializer(ordonnance)
+        return Response(serializer.data)
