@@ -38,7 +38,7 @@ def OrdonnanceDelete(request, pk):
 # get the ordonnance that are not checked (status = A)
 @api_view(['GET'])
 @permission_classes([IsMedecin])
-def OrdonnanceAttente(request):
+def OrdonnanceAttente(request, pk):
         ordonnance = Ordonnance.objects.filter(statue='A')
         serializer = OrdonnanceSerializer(ordonnance, many=True)
         return Response(serializer.data)
@@ -46,7 +46,7 @@ def OrdonnanceAttente(request):
 # validate the ordonnance by id 
 @api_view(['PUT'])
 @permission_classes([IsMedecin])
-def OrdonnanceValide(request):
+def OrdonnanceValide(request, pk):
         ordonnance = Ordonnance.objects.get(pk=pk)
         ordonnance.statue = 'V'
         ordonnance.save()
@@ -55,7 +55,7 @@ def OrdonnanceValide(request):
 # unvalidate the ordonnance by id
 @api_view(['PUT'])
 @permission_classes([IsMedecin])
-def OrdonnanceNonValide(request):
+def OrdonnanceNonValide(request, pk):
         ordonnance = Ordonnance.objects.get(pk=pk)
         ordonnance.statue = 'NV'
         ordonnance.save()
